@@ -9,6 +9,12 @@ import TicTacToe from '@/components/games/TicTacToe';
 import RockPaperScissors from '@/components/games/RockPaperScissors';
 import { Copy, Check, Users, ArrowLeft } from 'lucide-react';
 import { User } from '@supabase/supabase-js';
+import SnakeLadders from '@/components/games/SnakeLadders';
+import ConnectFour from '@/components/games/ConnectFour';
+import DotsAndBoxes from '@/components/games/DotsAndBoxes';
+import FourColors from '@/components/games/FourColors';
+import MemoryMatch from '@/components/games/MemoryMatch';
+
 
 interface Room {
   id: string;
@@ -107,7 +113,7 @@ export default function GameRoom({ roomId, user }: { roomId: string; user: User 
 
   if (!room) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 to-blue-600">
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-purple-600 to-blue-600">
         <div className="text-white text-xl animate-pulse">Loading room...</div>
       </div>
     );
@@ -117,48 +123,98 @@ export default function GameRoom({ roomId, user }: { roomId: string; user: User 
   const waitingForPlayer = !room.guest_id;
 
   const renderGame = () => {
-    if (waitingForPlayer) {
+  if (waitingForPlayer) {
+    return (
+      <div className="text-center text-gray-500">
+        <div className="text-6xl mb-4 animate-bounce">⏳</div>
+        <p className="text-xl mb-2 font-semibold">Waiting for opponent...</p>
+        <p className="text-gray-600">Share the room code with your friend</p>
+      </div>
+    );
+  }
+
+  switch (room.game_name) {
+    case 'tic_tac_toe':
+      return (
+        <TicTacToe
+          roomId={roomId}
+          user={user}
+          hostId={room.host_id}
+          guestId={room.guest_id}
+          initialState={room.game_state}
+        />
+      );
+    case 'rps':
+      return (
+        <RockPaperScissors
+          roomId={roomId}
+          user={user}
+          hostId={room.host_id}
+          guestId={room.guest_id}
+          initialState={room.game_state}
+        />
+      );
+    case 'snake_ladders':
+      return (
+        <SnakeLadders
+          roomId={roomId}
+          user={user}
+          hostId={room.host_id}
+          guestId={room.guest_id}
+          initialState={room.game_state}
+        />
+      );
+    case 'connect_four':
+      return (
+        <ConnectFour
+          roomId={roomId}
+          user={user}
+          hostId={room.host_id}
+          guestId={room.guest_id}
+          initialState={room.game_state}
+        />
+      );
+    case 'dots_boxes':
+      return (
+        <DotsAndBoxes
+          roomId={roomId}
+          user={user}
+          hostId={room.host_id}
+          guestId={room.guest_id}
+          initialState={room.game_state}
+        />
+      );
+    case 'four_colors':
+      return (
+        <FourColors
+          roomId={roomId}
+          user={user}
+          hostId={room.host_id}
+          guestId={room.guest_id}
+          initialState={room.game_state}
+        />
+      );
+    case 'memory_match':
+      return (
+        <MemoryMatch
+          roomId={roomId}
+          user={user}
+          hostId={room.host_id}
+          guestId={room.guest_id}
+          initialState={room.game_state}
+        />
+      );
+    default:
       return (
         <div className="text-center text-gray-500">
-          <div className="text-6xl mb-4 animate-bounce">⏳</div>
-          <p className="text-xl mb-2 font-semibold">Waiting for opponent...</p>
-          <p className="text-gray-600">Share the room code with your friend</p>
+          <p className="text-xl">Game not implemented yet</p>
         </div>
       );
-    }
-
-    switch (room.game_name) {
-      case 'tic_tac_toe':
-        return (
-          <TicTacToe
-            roomId={roomId}
-            user={user}
-            hostId={room.host_id}
-            guestId={room.guest_id}
-            initialState={room.game_state}
-          />
-        );
-      case 'rps':
-        return (
-          <RockPaperScissors
-            roomId={roomId}
-            user={user}
-hostId={room.host_id}
-            guestId={room.guest_id}
-            initialState={room.game_state}
-          />
-        );
-      default:
-        return (
-          <div className="text-center text-gray-500">
-            <p className="text-xl">Game not implemented yet</p>
-          </div>
-        );
-    }
-  };
+  }
+};
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-600 p-4">
+    <div className="min-h-screen bg-linear-to-br from-purple-600 via-blue-600 to-cyan-600 p-4">
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-2xl shadow-2xl p-6">
           <div className="flex justify-between items-center mb-4">

@@ -4,10 +4,15 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { Gamepad2, Users, Copy, Check, LogOut } from 'lucide-react';
-
+import SnakeLadders from '@/components/games/SnakeLadders';
 const GAMES = [
   { id: 'tic_tac_toe', name: 'Tic Tac Toe', emoji: '❌⭕', description: 'Classic 3x3 grid game' },
   { id: 'rps', name: 'Rock Paper Scissors', emoji: '✊✋✌️', description: 'Best of unlimited rounds' },
+  { id: 'snake_ladders', name: 'Snake & Ladders', emoji: '🐍🪜', description: 'Race to 100!' },
+  { id: 'connect_four', name: 'Connect Four', emoji: '🔴🔵', description: 'Connect 4 discs to win' },
+  { id: 'dots_boxes', name: 'Dots and Boxes', emoji: '⬜📦', description: 'Capture the most squares' },
+  { id: 'four_colors', name: 'Four Colors (UNO Lite)', emoji: '🎴🌈', description: 'Match colors or numbers' },
+  { id: 'memory_match', name: 'Memory Match', emoji: '🧠🎯', description: 'Find matching pairs' },
 ];
 
 export default function GamesList({ session }: { session: any }) {
@@ -118,7 +123,7 @@ export default function GamesList({ session }: { session: any }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-600 p-4">
+    <div className="min-h-screen bg-linear-to-br from-purple-600 via-blue-600 to-cyan-600 p-4">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-2xl p-8 mb-6">
           <div className="flex justify-between items-center mb-6">
@@ -141,7 +146,7 @@ export default function GamesList({ session }: { session: any }) {
                 key={game.id}
                 onClick={() => createRoom(game.id)}
                 disabled={loading}
-                className="bg-gradient-to-r from-purple-500 to-blue-500 text-white p-6 rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:scale-105 transform"
+                className="bg-linear-to-r from-purple-500 to-blue-500 text-white p-6 rounded-xl hover:from-purple-600 hover:to-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl hover:scale-105 transform"
               >
                 <div className="text-5xl mb-3">{game.emoji}</div>
                 <div className="text-xl font-semibold mb-1">{game.name}</div>

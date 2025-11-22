@@ -120,7 +120,7 @@ export default function TicTacToe({ roomId, user, hostId, guestId, initialState 
             </p>
             <button
               onClick={resetGame}
-              className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all font-semibold shadow-lg hover:shadow-xl flex items-center gap-2 mx-auto"
+              className="bg-linear-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all font-semibold shadow-lg hover:shadow-xl flex items-center gap-2 mx-auto"
             >
               <RotateCcw size={20} />
               Play Again

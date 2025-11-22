@@ -107,7 +107,7 @@ export default function RockPaperScissors({ roomId, user, hostId, guestId, initi
             </p>
             <button
               onClick={playAgain}
-              className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all font-semibold shadow-lg hover:shadow-xl flex items-center gap-2 mx-auto"
+              className="bg-linear-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all font-semibold shadow-lg hover:shadow-xl flex items-center gap-2 mx-auto"
             >
               <RotateCcw size={20} />
               Play Again
@@ -145,7 +145,7 @@ export default function RockPaperScissors({ roomId, user, hostId, guestId, initi
               disabled={!guestId || !!myChoice}
               className={`flex flex-col items-center justify-center w-28 h-28 rounded-2xl text-5xl transition-all shadow-lg ${
                 myChoice === choice.id
-                  ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white scale-110 shadow-2xl'
+                  ? 'bg-linear-to-br from-blue-500 to-blue-600 text-white scale-110 shadow-2xl'
                   : 'bg-white hover:bg-gray-50 hover:scale-105'
               } disabled:opacity-50 disabled:cursor-not-allowed border-2 border-gray-200`}
             >
@@ -160,7 +160,7 @@ export default function RockPaperScissors({ roomId, user, hostId, guestId, initi
         <div className="flex gap-8 items-center animate-fade-in">
           <div className="text-center">
             <div className="text-sm text-gray-600 mb-3 font-semibold">You chose</div>
-            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-2xl flex items-center justify-center text-5xl shadow-xl">
+            <div className="w-24 h-24 bg-linear-to-br from-blue-500 to-blue-600 text-white rounded-2xl flex items-center justify-center text-5xl shadow-xl">
               {choices.find(c => c.id === myChoice)?.emoji}
             </div>
             <div className="text-sm mt-2 font-medium text-gray-700">
@@ -170,7 +170,7 @@ export default function RockPaperScissors({ roomId, user, hostId, guestId, initi
           <div className="text-3xl font-bold text-gray-400">⚔️</div>
           <div className="text-center">
             <div className="text-sm text-gray-600 mb-3 font-semibold">Opponent chose</div>
-            <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-red-600 text-white rounded-2xl flex items-center justify-center text-5xl shadow-xl">
+            <div className="w-24 h-24 bg-linear-to-br from-red-500 to-red-600 text-white rounded-2xl flex items-center justify-center text-5xl shadow-xl">
               {choices.find(c => c.id === opponentChoice)?.emoji}
             </div>
             <div className="text-sm mt-2 font-medium text-gray-700">

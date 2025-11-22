@@ -47,7 +47,7 @@ export default function Chat({ roomId, user }: { roomId: string; user: User }) {
         data.map((msg) => ({
           id: msg.id,
           message: msg.message,
-          username: msg.user_id === user.id ? 'You' : 'Opponent',
+          username: msg.user_id === user.id ? '💬' : '💬',
           userId: msg.user_id,
           createdAt: msg.created_at,
         }))
@@ -63,7 +63,7 @@ export default function Chat({ roomId, user }: { roomId: string; user: User }) {
       roomId,
       message: input.trim(),
       userId: user.id,
-      username: 'You',
+      username: '💬',
     });
 
     setInput('');
@@ -71,7 +71,7 @@ export default function Chat({ roomId, user }: { roomId: string; user: User }) {
 
   return (
     <div className="bg-gray-50 rounded-lg h-[500px] flex flex-col shadow-inner">
-      <div className="bg-gradient-to-r from-purple-500 to-blue-500 px-4 py-3 rounded-t-lg">
+      <div className="bg-linear-to-r from-purple-500 to-blue-500 px-4 py-3 rounded-t-lg">
         <h3 className="font-semibold text-white flex items-center gap-2">
           <MessageCircle size={20} />
           Chat
@@ -94,7 +94,7 @@ export default function Chat({ roomId, user }: { roomId: string; user: User }) {
               }`}
             >
               <div
-                className={`inline-block px-4 py-2 rounded-lg max-w-[80%] break-words ${
+                className={`inline-block px-4 py-2 rounded-lg max-w-[80%] wrap-break-word ${
                   msg.userId === user.id
                     ? 'bg-blue-500 text-white rounded-br-none'
                     : 'bg-gray-200 text-gray-800 rounded-bl-none'
