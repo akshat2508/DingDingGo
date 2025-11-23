@@ -40,7 +40,7 @@ export default function FourColors({ roomId, user, hostId, guestId, initialState
     COLORS.forEach(color => {
       NUMBERS.forEach(number => {
         deck.push({ color, number });
-        if (number !== 0) deck.push({ color, number }); // 2 of each except 0
+        if (number !== 0) deck.push({ color, number });
       });
     });
     return shuffleDeck(deck);
@@ -75,7 +75,6 @@ export default function FourColors({ roomId, user, hostId, guestId, initialState
       };
     }
 
-    // Start with a card in discard pile
     if (defaultState.deck.length > 0) {
       defaultState.discardPile = [defaultState.deck[0]];
       defaultState.deck = defaultState.deck.slice(1);
@@ -144,7 +143,6 @@ export default function FourColors({ roomId, user, hostId, guestId, initialState
     if (!guestId || gameState.winner || !isMyTurn() || gameState.lastDrawn) return;
 
     if (gameState.deck.length === 0) {
-      // Reshuffle discard pile into deck
       const topCard = gameState.discardPile[gameState.discardPile.length - 1];
       const newDeck = shuffleDeck(gameState.discardPile.slice(0, -1));
       const drawnCard = newDeck[0];
@@ -171,7 +169,6 @@ export default function FourColors({ roomId, user, hostId, guestId, initialState
       ? [...gameState.hostHand, drawnCard]
       : [...gameState.guestHand, drawnCard];
 
-    // If drawn card can be played, allow it, otherwise end turn
     const canPlay = canPlayCard(drawnCard);
 
     const newState: GameState = {
@@ -211,10 +208,10 @@ export default function FourColors({ roomId, user, hostId, guestId, initialState
 
   const getColorClass = (color: string): string => {
     switch (color) {
-      case 'red': return 'bg-red-500';
-      case 'blue': return 'bg-blue-500';
-      case 'green': return 'bg-green-500';
-      case 'yellow': return 'bg-yellow-400';
+      case 'red': return 'bg-gradient-to-br from-red-400 to-red-500';
+      case 'blue': return 'bg-gradient-to-br from-blue-400 to-blue-500';
+      case 'green': return 'bg-gradient-to-br from-green-400 to-green-500';
+      case 'yellow': return 'bg-gradient-to-br from-yellow-300 to-yellow-400';
       default: return 'bg-gray-500';
     }
   };
@@ -224,13 +221,13 @@ export default function FourColors({ roomId, user, hostId, guestId, initialState
 
   return (
     <div className="flex flex-col items-center justify-center h-full p-4">
-      <div className="mb-4 text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Four Colors (Uno Lite)</h2>
+      <div className="mb-6 text-center">
+        <h2 className="text-4xl font-black text-gray-800 mb-3 tracking-tight">Four Colors 🎴</h2>
         {!guestId ? (
-          <p className="text-gray-600">Waiting for opponent...</p>
+          <p className="text-gray-600 text-lg font-medium">Waiting for opponent...</p>
         ) : gameState.winner ? (
           <div>
-            <p className="text-2xl font-bold mb-3">
+            <p className="text-3xl font-black mb-4">
               {gameState.winner === (isHost ? 'host' : 'guest') ? (
                 <span className="text-green-600">You won! 🎉</span>
               ) : (
@@ -239,64 +236,64 @@ export default function FourColors({ roomId, user, hostId, guestId, initialState
             </p>
             <button
               onClick={resetGame}
-              className="bg-linear-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all font-semibold shadow-lg flex items-center gap-2 mx-auto"
+              className="bg-linear-to-r from-orange-400 to-orange-500 text-white px-8 py-4 rounded-2xl hover:from-orange-500 hover:to-orange-600 transition-all font-bold shadow-lg hover:shadow-xl flex items-center gap-2 mx-auto transform hover:scale-105 active:scale-95 duration-150"
             >
-              <RotateCcw size={20} />
+              <RotateCcw size={22} strokeWidth={2.5} />
               Play Again
             </button>
           </div>
         ) : (
-          <p className={`text-lg font-semibold ${isMyTurn() ? 'text-green-600' : 'text-orange-600'}`}>
-            {isMyTurn() ? 'Your turn! Play or draw a card' : "Opponent's turn"}
+          <p className={`text-xl font-bold ${isMyTurn() ? 'text-green-600' : 'text-orange-600'}`}>
+            {isMyTurn() ? '✨ Your turn! Play or draw a card' : "⏳ Opponent's turn"}
           </p>
         )}
       </div>
 
       {/* Opponent's card count */}
-      <div className="mb-4">
-        <div className="bg-gray-200 px-6 py-3 rounded-lg">
-          <p className="text-sm text-gray-600 mb-1">Opponent's cards</p>
-          <div className="flex gap-1">
+      <div className="mb-6">
+        <div className="bg-white px-6 py-4 rounded-2xl shadow-md border-2 border-blue-100">
+          <p className="text-sm font-bold text-gray-600 mb-2 text-center">Opponent's cards</p>
+          <div className="flex gap-2 justify-center">
             {(isHost ? gameState.guestHand : gameState.hostHand).map((_, i) => (
-              <div key={i} className="w-12 h-16 bg-linear-to-br from-gray-700 to-gray-900 rounded shadow" />
+              <div key={i} className="w-12 h-16 bg-linear-to-br from-gray-600 to-gray-800 rounded-lg shadow-md border-2 border-gray-700" />
             ))}
           </div>
         </div>
       </div>
 
       {/* Game area */}
-      <div className="flex gap-8 items-center mb-6">
+      <div className="flex gap-12 items-center mb-8">
         {/* Deck */}
         <div className="text-center">
-          <p className="text-sm font-semibold text-gray-600 mb-2">Deck ({gameState.deck.length})</p>
+          <p className="text-sm font-bold text-gray-700 mb-3">Deck ({gameState.deck.length})</p>
           <button
             onClick={drawCard}
             disabled={!isMyTurn() || gameState.winner !== null || !guestId || gameState.lastDrawn}
-            className={`w-24 h-32 rounded-lg shadow-xl transition-all ${
+            className={`w-28 h-36 rounded-2xl shadow-xl transition-all border-4 ${
               isMyTurn() && !gameState.winner && guestId && !gameState.lastDrawn
-                ? 'bg-linear-to-br from-gray-700 to-gray-900 hover:scale-105 cursor-pointer'
-                : 'bg-gray-400 cursor-not-allowed opacity-50'
+                ? 'bg-linear-to-br from-gray-700 to-gray-900 hover:scale-110 cursor-pointer border-gray-600 hover:border-orange-400'
+                : 'bg-gray-400 cursor-not-allowed opacity-50 border-gray-500'
             }`}
           >
-            <p className="text-white text-2xl">🎴</p>
+            <p className="text-5xl">🎴</p>
           </button>
         </div>
 
         {/* Discard pile */}
         <div className="text-center">
-          <p className="text-sm font-semibold text-gray-600 mb-2">Top Card</p>
+          <p className="text-sm font-bold text-gray-700 mb-3">Top Card</p>
           {topCard && (
-            <div className={`w-24 h-32 rounded-lg shadow-xl flex items-center justify-center ${getColorClass(topCard.color)}`}>
-              <span className="text-white text-5xl font-bold">{topCard.number}</span>
+            <div className={`w-28 h-36 rounded-2xl shadow-2xl flex items-center justify-center border-4 border-white ${getColorClass(topCard.color)}`}>
+              <span className="text-white text-6xl font-black drop-shadow-lg">{topCard.number}</span>
             </div>
           )}
         </div>
       </div>
 
       {/* Player's hand */}
-      <div className="bg-gray-100 p-6 rounded-xl shadow-lg">
-        <p className="text-sm font-semibold text-gray-600 mb-3 text-center">Your Cards</p>
-        <div className="flex gap-2 flex-wrap justify-center max-w-4xl">
+      <div className="bg-white p-6 rounded-3xl shadow-lg border-2 border-blue-100">
+        <p className="text-sm font-bold text-gray-700 mb-4 text-center">Your Cards ✋</p>
+        <div className="flex gap-3 flex-wrap justify-center max-w-4xl">
           {myHand.map((card, index) => (
             <button
               key={index}
@@ -306,21 +303,21 @@ export default function FourColors({ roomId, user, hostId, guestId, initialState
                 }
               }}
               disabled={!isMyTurn() || gameState.winner !== null || !guestId || !canPlayCard(card)}
-              className={`w-20 h-28 rounded-lg shadow-lg transition-all ${getColorClass(card.color)} ${
+              className={`w-24 h-32 rounded-2xl shadow-lg transition-all border-4 border-white ${getColorClass(card.color)} ${
                 isMyTurn() && !gameState.winner && guestId && canPlayCard(card)
-                  ? 'hover:scale-110 hover:-translate-y-2 cursor-pointer'
-                  : 'cursor-not-allowed opacity-50'
-              } ${selectedCard === index ? 'ring-4 ring-white scale-105' : ''}`}
+                  ? 'hover:scale-125 hover:-translate-y-3 cursor-pointer hover:shadow-2xl'
+                  : 'cursor-not-allowed opacity-40'
+              } ${selectedCard === index ? 'ring-4 ring-orange-400 scale-110' : ''}`}
               onMouseEnter={() => setSelectedCard(index)}
               onMouseLeave={() => setSelectedCard(null)}
             >
               <div className="flex items-center justify-center h-full">
-                <span className="text-white text-4xl font-bold">{card.number}</span>
+                <span className="text-white text-5xl font-black drop-shadow-lg">{card.number}</span>
               </div>
             </button>
           ))}
         </div>
-        {myHand.length === 0 && <p className="text-gray-500 text-center">No cards</p>}
+        {myHand.length === 0 && <p className="text-gray-500 text-center font-semibold">No cards</p>}
       </div>
     </div>
   );

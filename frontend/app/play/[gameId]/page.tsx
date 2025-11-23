@@ -25,9 +25,12 @@ export default function PlayPage({ params }: { params: Promise<{ gameId: string 
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-purple-600 to-blue-600">
-        <div className="text-white text-xl animate-pulse">Loading game...</div>
-      </div>
+     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-sky-200 to-blue-100">
+  <div className="text-blue-700 text-xl font-semibold animate-pulse">
+    Loading...
+  </div>
+</div>
+
     );
   }
 
