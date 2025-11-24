@@ -4,3 +4,7 @@ Frontend : Next , backend express , Socket io , npm run dev for fronetend and ba
 {
     Added games in games component , update the games list json and then add a case inside gameroom renderGame function switch statement
 }
+
+{
+    Deployed backend on render akshatpaul82
+}

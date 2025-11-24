@@ -12,13 +12,15 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:3000',
+    // origin: 'http://localhost:3000',
+        origin: '*',
+
     methods: ['GET', 'POST'],
     credentials: true
   }
 });
 
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 app.get('/health', (req, res) => {
