@@ -202,32 +202,37 @@ export default function ConnectFour({ roomId, user, hostId, guestId, initialStat
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-full p-4">
+    <div className="flex flex-col items-center justify-center h-full p-4" style={{ backgroundColor: '#DFF4FF' }}>
       <div className="mb-4 text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">Connect Four</h2>
+        <h2 className="text-3xl font-bold mb-2" style={{ color: '#2D3A45' }}>Connect Four</h2>
         {!guestId ? (
-          <p className="text-gray-600">Waiting for opponent...</p>
+          <p style={{ color: '#70838F' }}>Waiting for opponent...</p>
         ) : gameState.winner ? (
           <div>
             <p className="text-2xl font-bold mb-3">
               {gameState.winner === 'draw' ? (
-                <span className="text-yellow-600">It's a draw! 🤝</span>
+                <span style={{ color: '#FCEB87' }}>It's a draw! 🤝</span>
               ) : gameState.winner === (isHost ? 'host' : 'guest') ? (
-                <span className="text-green-600">You won! 🎉</span>
+                <span style={{ color: '#88E3C2' }}>You won! 🎉</span>
               ) : (
-                <span className="text-red-600">You lost! 😢</span>
+                <span style={{ color: '#FF9FB8' }}>You lost! 😢</span>
               )}
             </p>
             <button
               onClick={resetGame}
-              className="bg-linear-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all font-semibold shadow-lg flex items-center gap-2 mx-auto"
+              className="px-6 py-3 rounded-xl hover:shadow-lg transition-all font-semibold flex items-center gap-2 mx-auto"
+              style={{ 
+                backgroundColor: '#FFA84A',
+                color: '#FFFFFF',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)'
+              }}
             >
               <RotateCcw size={20} />
               Play Again
             </button>
           </div>
         ) : (
-          <p className={`text-lg font-semibold ${isMyTurn() ? 'text-green-600' : 'text-orange-600'}`}>
+          <p className="text-lg font-semibold" style={{ color: isMyTurn() ? '#88E3C2' : '#FFA84A' }}>
             {isMyTurn() ? 'Your turn! Drop a disc' : "Opponent's turn"}
           </p>
         )}
@@ -242,7 +247,8 @@ export default function ConnectFour({ roomId, user, hostId, guestId, initialStat
               {hoveredCol === col && isMyTurn() && !gameState.winner && guestId && (
                 <Circle
                   size={24}
-                  className={`${isHost ? 'text-blue-500' : 'text-red-500'} animate-bounce`}
+                  className="animate-bounce"
+                  style={{ color: isHost ? '#7EC9F5' : '#FF9FB8' }}
                   fill="currentColor"
                 />
               )}
@@ -250,7 +256,10 @@ export default function ConnectFour({ roomId, user, hostId, guestId, initialStat
           ))}
         </div>
 
-        <div className="bg-linear-to-br from-blue-600 to-blue-800 p-4 rounded-xl shadow-2xl">
+        <div className="p-4 rounded-xl" style={{ 
+          background: 'linear-gradient(135deg, #7EC9F5 0%, #88E3C2 100%)',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)'
+        }}>
           <div className="grid gap-1">
             {gameState.board.map((row, rowIndex) => (
               <div key={rowIndex} className="flex gap-1">
@@ -263,16 +272,18 @@ export default function ConnectFour({ roomId, user, hostId, guestId, initialStat
                     disabled={!isMyTurn() || gameState.winner !== null || !guestId}
                     className={`w-16 h-16 rounded-full transition-all duration-200 ${
                       isMyTurn() && !gameState.winner && guestId
-                        ? 'cursor-pointer hover:bg-blue-400'
+                        ? 'cursor-pointer'
                         : 'cursor-not-allowed'
-                    } ${isWinningCell(rowIndex, colIndex) ? 'ring-4 ring-yellow-400 animate-pulse' : ''}`}
+                    } ${isWinningCell(rowIndex, colIndex) ? 'ring-4 animate-pulse' : ''}`}
                     style={{
                       backgroundColor: cell === null
-                        ? '#e0f2fe'
+                        ? '#FFFFFF'
                         : cell === 'host'
-                        ? '#3b82f6'
-                        : '#ef4444',
-                      boxShadow: cell !== null ? '0 4px 6px rgba(0, 0, 0, 0.3)' : 'inset 0 2px 4px rgba(0, 0, 0, 0.2)'
+                        ? '#7EC9F5'
+                        : '#FF9FB8',
+                      boxShadow: isWinningCell(rowIndex, colIndex)
+                        ? '0 0 0 6px rgba(252,235,135,0.8), 0 4px 8px rgba(0, 0, 0, 0.2)'
+                        : (cell !== null ? '0 4px 8px rgba(0, 0, 0, 0.2)' : 'inset 0 2px 4px rgba(0, 0, 0, 0.1)')
                     }}
                   />
                 ))}
@@ -284,16 +295,36 @@ export default function ConnectFour({ roomId, user, hostId, guestId, initialStat
 
       {/* Player indicators */}
       <div className="flex gap-8 mt-6">
-        <div className={`px-6 py-3 rounded-lg border-2 ${isHost ? 'bg-blue-100 border-blue-500' : 'bg-red-100 border-red-500'}`}>
+        <div 
+          className="px-6 py-3 rounded-xl border-2" 
+          style={{ 
+            backgroundColor: isHost ? '#DFF4FF' : '#FFE6EC',
+            borderColor: isHost ? '#7EC9F5' : '#FF9FB8',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)'
+          }}
+        >
           <div className="flex items-center gap-2 mb-1">
-            <div className={`w-6 h-6 rounded-full ${isHost ? 'bg-blue-500' : 'bg-red-500'}`} />
-            <span className={`font-semibold ${isHost ? 'text-blue-800' : 'text-red-800'}`}>You</span>
+            <div 
+              className="w-6 h-6 rounded-full" 
+              style={{ backgroundColor: isHost ? '#7EC9F5' : '#FF9FB8' }}
+            />
+            <span className="font-semibold" style={{ color: '#2D3A45' }}>You</span>
           </div>
         </div>
-        <div className={`px-6 py-3 rounded-lg border-2 ${isHost ? 'bg-red-100 border-red-500' : 'bg-blue-100 border-blue-500'}`}>
+        <div 
+          className="px-6 py-3 rounded-xl border-2" 
+          style={{ 
+            backgroundColor: isHost ? '#FFE6EC' : '#DFF4FF',
+            borderColor: isHost ? '#FF9FB8' : '#7EC9F5',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)'
+          }}
+        >
           <div className="flex items-center gap-2 mb-1">
-            <div className={`w-6 h-6 rounded-full ${isHost ? 'bg-red-500' : 'bg-blue-500'}`} />
-            <span className={`font-semibold ${isHost ? 'text-red-800' : 'text-blue-800'}`}>Opponent</span>
+            <div 
+              className="w-6 h-6 rounded-full" 
+              style={{ backgroundColor: isHost ? '#FF9FB8' : '#7EC9F5' }}
+            />
+            <span className="font-semibold" style={{ color: '#2D3A45' }}>Opponent</span>
           </div>
         </div>
       </div>

@@ -219,8 +219,12 @@ export default function MemoryMatch({ roomId, user, hostId, guestId, initialStat
             </p>
             <button
               onClick={resetGame}
-              className="bg-linear-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all font-semibold shadow-lg flex items-center gap-2 mx-auto"
-            >
+            className="px-6 py-3 rounded-xl hover:shadow-lg transition-all font-semibold flex items-center gap-2 mx-auto"
+              style={{ 
+                backgroundColor: '#FFA84A',
+                color: '#FFFFFF',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)'
+              }}            >
               <RotateCcw size={20} />
               Play Again
             </button>
