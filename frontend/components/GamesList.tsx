@@ -56,7 +56,7 @@ export default function GamesList({ session }: { session: any }) {
     try {
       setLoading(true);
       
-      console.log('Looking for room with code:', joinCode.toUpperCase());
+      //console.log('Looking for room with code:', joinCode.toUpperCase());
       
       const { data: rooms, error: searchError } = await supabase
         .from('game_rooms')
@@ -64,10 +64,10 @@ export default function GamesList({ session }: { session: any }) {
         .eq('room_code', joinCode.toUpperCase())
         .eq('status', 'waiting');
 
-      console.log('Search result:', { rooms, searchError });
+      //console.log('Search result:', { rooms, searchError });
 
       if (searchError) {
-        console.error('Search error:', searchError);
+        //console.error('Search error:', searchError);
         alert('Error searching for room: ' + searchError.message);
         return;
       }
@@ -89,7 +89,7 @@ export default function GamesList({ session }: { session: any }) {
         return;
       }
 
-      console.log('Joining room:', data.id);
+      //console.log('Joining room:', data.id);
 
       const { error: updateError } = await supabase
         .from('game_rooms')
@@ -101,15 +101,15 @@ export default function GamesList({ session }: { session: any }) {
         .eq('id', data.id);
 
       if (updateError) {
-        console.error('Update error:', updateError);
+        //console.error('Update error:', updateError);
         alert('Error joining room: ' + updateError.message);
         return;
       }
 
-      console.log('Successfully joined room, navigating...');
+      //console.log('Successfully joined room, navigating...');
       router.push(`/play/${data.id}`);
     } catch (error: any) {
-      console.error('Join room error:', error);
+      //console.error('Join room error:', error);
       alert('Unexpected error: ' + error.message);
     } finally {
       setLoading(false);
@@ -168,7 +168,7 @@ export default function GamesList({ session }: { session: any }) {
               </div>
               Join with Code
             </h2>
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-col md:flex-row">
               <input
                 type="text"
                 value={joinCode}

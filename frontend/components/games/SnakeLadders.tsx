@@ -54,11 +54,11 @@ export default function SnakeLadders({ roomId, user, hostId, guestId, initialSta
   const isHost = user.id === hostId;
   const isGuest = user.id === guestId;
   
-  console.log('User ID:', user.id);
-  console.log('Host ID:', hostId);
-  console.log('Guest ID:', guestId);
-  console.log('Is Host:', isHost);
-  console.log('Is Guest:', isGuest);
+  //console.log('User ID:', user.id);
+  //console.log('Host ID:', hostId);
+  //console.log('Guest ID:', guestId);
+  //console.log('Is Host:', isHost);
+  //console.log('Is Guest:', isGuest);
   
   const [gameState, setGameState] = useState<GameState>(() => {
     // Ensure we always have a valid initial state
@@ -88,13 +88,13 @@ export default function SnakeLadders({ roomId, user, hostId, guestId, initialSta
   const [rolling, setRolling] = useState(false);
 
   useEffect(() => {
-    console.log('Current Player:', gameState.currentPlayer);
-    console.log('Is My Turn:', isMyTurn());
+    //console.log('Current Player:', gameState.currentPlayer);
+    //console.log('Is My Turn:', isMyTurn());
   }, [gameState.currentPlayer]);
 
   useEffect(() => {
     socket.on('game-updated', ({ gameState: newState }) => {
-      console.log('Game updated received:', newState);
+      //console.log('Game updated received:', newState);
       // Ensure currentPlayer is never undefined when receiving updates
       if (newState && typeof newState === 'object') {
         setGameState({
@@ -188,18 +188,18 @@ export default function SnakeLadders({ roomId, user, hostId, guestId, initialSta
   };
 
   const isMyTurn = () => {
-    console.log('Checking turn - isHost:', isHost, 'isGuest:', isGuest, 'currentPlayer:', gameState.currentPlayer);
+    //console.log('Checking turn - isHost:', isHost, 'isGuest:', isGuest, 'currentPlayer:', gameState.currentPlayer);
     
     if (isHost) {
       const result = gameState.currentPlayer === 'host';
-      console.log('Host check result:', result);
+      //console.log('Host check result:', result);
       return result;
     } else if (isGuest) {
       const result = gameState.currentPlayer === 'guest';
-      console.log('Guest check result:', result);
+      //console.log('Guest check result:', result);
       return result;
     }
-    console.log('Neither host nor guest - returning false');
+    //console.log('Neither host nor guest - returning false');
     return false;
   };
 
@@ -304,7 +304,7 @@ export default function SnakeLadders({ roomId, user, hostId, guestId, initialSta
               {isMyTurn() ? 'Your turn! Roll the dice' : "Opponent's turn"}
             </p>
             <p className="text-xs text-gray-500 mt-1">
-              Debug: You are {isHost ? 'Host' : isGuest ? 'Guest' : 'Unknown'} - Current turn: {gameState.currentPlayer}
+              You are {isHost ? 'Host' : isGuest ? 'Guest' : 'Unknown'} - Current turn: {gameState.currentPlayer}
             </p>
           </div>
         )}

@@ -58,7 +58,7 @@ export default function GameRoom({ roomId, user }: { roomId: string; user: User 
         .maybeSingle();
 
       if (error) {
-        console.error('Load room error:', error);
+        //console.error('Load room error:', error);
         alert('Error loading room: ' + error.message);
         router.push('/');
         return;
@@ -78,7 +78,7 @@ export default function GameRoom({ roomId, user }: { roomId: string; user: User 
 
       setRoom(data);
     } catch (error: any) {
-      console.error('Unexpected error:', error);
+      //console.error('Unexpected error:', error);
       alert('Error: ' + error.message);
       router.push('/');
     }
